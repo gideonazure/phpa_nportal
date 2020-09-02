@@ -1,0 +1,48 @@
+/***********************************/
+/**** ARTICLE PAGE ********************/
+/***********************************/
+
+main section.article {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 60px;
+    padding: 30px;
+}
+
+main section.article >.article_title {
+    color: #333;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+main section.article >.article_title::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #DC3543;
+    margin: 15px 0px;
+}
+
+
+main section.article > .article_sub{
+    display: block;
+    height: 30px;
+    margin-bottom: 60px;
+}
+
+main section.article > .article_sub > .article_category,
+main section.article > .article_sub > .article_date{
+    color: #DC3543;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+main section.article > .article_sub > .article_category {
+    float: left;
+}
+
+main section.article > .article_sub > .article_date {
+    float: right;
+}
+

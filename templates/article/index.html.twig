@@ -1,15 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% set pageTitle = article.articleTitle %}
+{% set activeCategory = article.categoryTitle %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/article.css') }}">
 {% endblock %}
 
 {% block body %}
-    <section class="post">
-        <div>{{ article.articleTitle }}</div>
-        <div>{{ article.categoryTitle }} / {{ article.publicationDate | date('d.m.Y') }}</div>
-        <div>{{ article.articleText }}</div>
+    <section class="article">
+        <div class="article_title">{{ article.articleTitle }}</div>
+
+        <div class="article_sub">
+            <span class="article_category">{{ article.categoryTitle }}</span>
+            <span class="article_date">{{ article.publicationDate | date('d.m.Y') }}</span>
+        </div>
+        <div class="article_text">{{ article.articleText }}</div>
     </section>
 {% endblock %}

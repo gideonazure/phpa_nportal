@@ -23,7 +23,7 @@ final class ArticleController extends AbstractController
      * @param int $id
      * @return Response
      */
-    public function show(int $id): Response
+    public function index(int $id): Response
     {
         $article = $this->articleProvider->getItem($id);
 

@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb1334ae-dc06-436a-8d9a-131f66f91efb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/article.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ArticleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ArticleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ArticlePageDataItemFakeProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ArticlePageDataItemFakeProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ArticlePageDataProviderInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ArticlePageDataProviderInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/_header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/_header.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +87,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Service" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/css" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -89,11 +95,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/css" />
       <recent name="$PROJECT_DIR$/src/Service" />
       <recent name="$PROJECT_DIR$/src/Collection" />
       <recent name="$PROJECT_DIR$/src/Controller" />
       <recent name="$PROJECT_DIR$/templates" />
-      <recent name="$PROJECT_DIR$/src/ViewModel" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -105,7 +111,7 @@
       <option name="presentableId" value="Default" />
       <updated>1598806121619</updated>
       <workItem from="1598806124017" duration="725000" />
-      <workItem from="1599030546649" duration="5771000" />
+      <workItem from="1599030546649" duration="8724000" />
     </task>
     <servers />
   </component>
@@ -133,6 +139,10 @@
       <screen x="-554" y="-1080" width="2560" height="1080" />
     </state>
     <state x="455" y="-1080" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-554.-1080.2560.1080/0.0.1440.900@-554.-1080.2560.1080" timestamp="1599037067653" />
+    <state x="464" y="-778" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599040973642">
+      <screen x="-554" y="-1080" width="2560" height="1080" />
+    </state>
+    <state x="464" y="-778" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/-554.-1080.2560.1080/0.0.1440.900@-554.-1080.2560.1080" timestamp="1599040973642" />
     <state x="281" y="32" key="CommitChangelistDialog2" timestamp="1598816005311">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
