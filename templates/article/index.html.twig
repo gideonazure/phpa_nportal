@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% set pageTitle = article.articleTitle %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="post">
+        <div>{{ article.articleTitle }}</div>
+        <div>{{ article.categoryTitle }} / {{ article.publicationDate | date('d.m.Y') }}</div>
+        <div>{{ article.articleText }}</div>
+    </section>
+{% endblock %}
