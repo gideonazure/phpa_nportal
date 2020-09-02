@@ -12,7 +12,6 @@ final class ArticlePageDataItem
     private string $articleText;
     private \DateTimeImmutable $publicationDate;
 
-
     public function __construct(
         int $id,
         string $categoryTitle,
@@ -41,7 +40,6 @@ final class ArticlePageDataItem
     {
         return $this->articleTitle;
     }
-
 
     public function getArticleText(): string
     {

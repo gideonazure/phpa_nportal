@@ -20,15 +20,13 @@ final class ArticleController extends AbstractController
 
     /**
      * @Route("/article/{id}", methods={"GET"}, name="app_article")
-     * @param int $id
-     * @return Response
      */
     public function index(int $id): Response
     {
         $article = $this->articleProvider->getItem($id);
 
         return $this->render('article/index.html.twig', [
-            'article' => $article
+            'article' => $article,
         ]);
     }
 }

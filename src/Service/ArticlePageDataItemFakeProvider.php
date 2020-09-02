@@ -24,11 +24,11 @@ final class ArticlePageDataItemFakeProvider implements ArticlePageDataProviderIn
         $this->faker = Factory::create();
     }
 
-
     /**
-     * The method describes the functionality for get one article
+     * The method describes the functionality for get one article.
      *
      * @param int $id Id of the article to get
+     *
      * @return ArticlePageDataItem Instance of article DTO
      */
     public function getItem(int $id): ArticlePageDataItem
@@ -36,11 +36,11 @@ final class ArticlePageDataItemFakeProvider implements ArticlePageDataProviderIn
         return $this->createArticle($id);
     }
 
-
     /**
-     *The method implements the creation of an instance of ArticlePageDataItem using the Faker library
+     *The method implements the creation of an instance of ArticlePageDataItem using the Faker library.
      *
      * @param int $id Specifies the id of the entry when instantiating
+     *
      * @return ArticlePageDataItem Instance of article DTO
      */
     private function createArticle(int $id): ArticlePageDataItem
@@ -59,5 +59,4 @@ final class ArticlePageDataItemFakeProvider implements ArticlePageDataProviderIn
             \DateTimeImmutable::createFromMutable($this->faker->dateTimeThisYear)
         );
     }
-
 }

@@ -7,8 +7,7 @@ namespace App\Service;
 use App\ViewModel\ArticlePageDataItem;
 
 /**
- * Interface describes the getItem method for getting one record by id
- * @package App\Service
+ * Interface describes the getItem method for getting one record by id.
  */
 interface ArticlePageDataProviderInterface
 {
