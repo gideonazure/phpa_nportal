@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\ViewModel\ArticlePageDataItem;
+use App\ViewModel\FakeArticlePage;
 use Faker\Factory;
 use Faker\Generator;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class ArticlePageDataItemFakeProvider implements ArticlePageDataProviderInterface
+final class FakeArticleProvider implements FakeArticleProviderInterface
 {
     private const CATEGORIES = [
         'World',
@@ -24,14 +25,7 @@ final class ArticlePageDataItemFakeProvider implements ArticlePageDataProviderIn
         $this->faker = Factory::create();
     }
 
-    /**
-     * The method describes the functionality for get one article.
-     *
-     * @param int $id Id of the article to get
-     *
-     * @return ArticlePageDataItem Instance of article DTO
-     */
-    public function getItem(int $id): ArticlePageDataItem
+    public function getById(int $id): FakeArticlePage
     {
         return $this->createArticle($id);
     }
@@ -41,17 +35,23 @@ final class ArticlePageDataItemFakeProvider implements ArticlePageDataProviderIn
      *
      * @param int $id Specifies the id of the entry when instantiating
      *
-     * @return ArticlePageDataItem Instance of article DTO
+     * @return FakeArticlePage Instance of article DTO
      */
-    private function createArticle(int $id): ArticlePageDataItem
+    private function createArticle(int $id): FakeArticlePage
     {
+
+        if($id > 50){
+            throw new NotFoundHttpException('Sorry, this article no longer exists or did not exist at all');
+        }
+
+
         $title = $this->faker->words(
             $this->faker->numberBetween(1, 4),
             true
         );
         $title = \ucfirst($title);
 
-        return new ArticlePageDataItem(
+        return new FakeArticlePage(
             $id,
             $this->faker->randomElement(self::CATEGORIES),
             $title,

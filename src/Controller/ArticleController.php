@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\ArticlePageDataProviderInterface;
+use App\Service\FakeArticleProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class ArticleController extends AbstractController
 {
-    private ArticlePageDataProviderInterface $articleProvider;
+    private FakeArticleProviderInterface $articleProvider;
 
-    public function __construct(ArticlePageDataProviderInterface $articleProvider)
+    public function __construct(FakeArticleProviderInterface $articleProvider)
     {
         $this->articleProvider = $articleProvider;
     }
@@ -21,12 +22,19 @@ final class ArticleController extends AbstractController
     /**
      * @Route("/article/{id}", methods={"GET"}, name="app_article")
      */
-    public function index(int $id): Response
+    public function show(int $id): Response
     {
-        $article = $this->articleProvider->getItem($id);
+        $error = null;
 
-        return $this->render('article/index.html.twig', [
-            'article' => $article,
-        ]);
+        try{
+            $article = $this->articleProvider->getById($id);
+
+            return $this->render('article/show.html.twig', [
+                'article' => $article
+            ]);
+        }catch (\NotFoundHttpException $e){
+            $e->getMessage();
+        }
+
     }
 }

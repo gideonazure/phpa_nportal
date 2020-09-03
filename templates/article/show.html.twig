@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set pageTitle = article.articleTitle %}
+{% set pageTitle = article.title %}
 {% set activeCategory = article.categoryTitle %}
 
 {% block styles %}
@@ -9,12 +9,12 @@
 
 {% block body %}
     <section class="article">
-        <div class="article_title">{{ article.articleTitle }}</div>
+        <div class="article_title">{{ article.title }}</div>
 
         <div class="article_sub">
             <span class="article_category">{{ article.categoryTitle }}</span>
             <span class="article_date">{{ article.publicationDate | date('d.m.Y') }}</span>
         </div>
-        <div class="article_text">{{ article.articleText }}</div>
+        <div class="article_text">{{ article.text }}</div>
     </section>
 {% endblock %}

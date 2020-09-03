@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\ViewModel;
 
-final class ArticlePageDataItem
+final class FakeArticlePage
 {
     private int $id;
     private string $categoryTitle;
-    private string $articleTitle;
-    private string $articleText;
+    private string $title;
+    private string $text;
     private \DateTimeImmutable $publicationDate;
 
     public function __construct(
         int $id,
         string $categoryTitle,
-        string $articleTitle,
-        string $articleText,
+        string $title,
+        string $text,
         \DateTimeImmutable $publicationDate
     ) {
         $this->id = $id;
         $this->categoryTitle = $categoryTitle;
-        $this->articleTitle = $articleTitle;
-        $this->articleText = $articleText;
+        $this->title = $title;
+        $this->text = $text;
         $this->publicationDate = $publicationDate;
     }
 
@@ -36,14 +36,14 @@ final class ArticlePageDataItem
         return $this->categoryTitle;
     }
 
-    public function getArticleTitle(): string
+    public function getTitle(): string
     {
-        return $this->articleTitle;
+        return $this->title;
     }
 
-    public function getArticleText(): string
+    public function getText(): string
     {
-        return $this->articleText;
+        return $this->text;
     }
 
     public function getPublicationDate(): \DateTimeImmutable
