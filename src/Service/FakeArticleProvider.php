@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\ViewModel\FakeArticlePage;
+use App\Exception\ArticleNotFoundException;
+use App\ViewModel\ArticlePage;
 use Faker\Factory;
 use Faker\Generator;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class FakeArticleProvider implements FakeArticleProviderInterface
+final class FakeArticleProvider implements ArticleProviderInterface
 {
     private const CATEGORIES = [
         'World',
@@ -25,7 +25,7 @@ final class FakeArticleProvider implements FakeArticleProviderInterface
         $this->faker = Factory::create();
     }
 
-    public function getById(int $id): FakeArticlePage
+    public function getById(int $id): ArticlePage
     {
         return $this->createArticle($id);
     }
@@ -35,15 +35,13 @@ final class FakeArticleProvider implements FakeArticleProviderInterface
      *
      * @param int $id Specifies the id of the entry when instantiating
      *
-     * @return FakeArticlePage Instance of article DTO
+     * @return ArticlePage Instance of article DTO
+     *
+     * @throws ArticleNotFoundException
      */
-    private function createArticle(int $id): FakeArticlePage
+    private function createArticle(int $id): ArticlePage
     {
-
-        if($id > 50){
-            throw new NotFoundHttpException('Sorry, this article no longer exists or did not exist at all');
-        }
-
+        $this->checkArticleExists($id);
 
         $title = $this->faker->words(
             $this->faker->numberBetween(1, 4),
@@ -51,12 +49,19 @@ final class FakeArticleProvider implements FakeArticleProviderInterface
         );
         $title = \ucfirst($title);
 
-        return new FakeArticlePage(
+        return new ArticlePage(
             $id,
             $this->faker->randomElement(self::CATEGORIES),
             $title,
             $this->faker->realText(2300, 2),
             \DateTimeImmutable::createFromMutable($this->faker->dateTimeThisYear)
         );
+    }
+
+    private function checkArticleExists(int $id)
+    {
+        if ($id > 50) {
+            throw new ArticleNotFoundException('Sorry, this article no longer exists or did not exist at all');
+        }
     }
 }

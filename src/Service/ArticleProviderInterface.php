@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\ViewModel\FakeArticlePage;
+use App\ViewModel\ArticlePage;
 
 /**
  * Interface describes the getItem method for getting one record by id.
  */
-interface FakeArticleProviderInterface
+interface ArticleProviderInterface
 {
-    public function getById(int $id): FakeArticlePage;
+    public function getById(int $id): ArticlePage;
 }
