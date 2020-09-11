@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Exception\ArticleNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,17 +40,17 @@ final class ArticleRepository extends ServiceEntityRepository
 
     /**
      * @return Article
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getOneById(int $id): object
     {
-        $query = $this->createQueryBuilder('a')
-            ->where('a.publicationDate IS NOT NULL')
-            ->andWhere('a.id = '. $id)
-            ->setMaxResults(self::LATEST_PUBLISHED_ARTICLES_COUNT)
-            ->orderBy('a.publicationDate', 'DESC')
-            ->getQuery();
+        $result = $this->findOneBy(array('id' => $id));
 
-        return $this->findOneBy(array('id' => $id));
+        if ($result === null) {
+            throw new ArticleNotFoundException('Sorry, this article no longer exists or did not exist at all');
+        }
+
+        return $result;
     }
 
 

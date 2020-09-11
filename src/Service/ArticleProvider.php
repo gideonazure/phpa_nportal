@@ -27,10 +27,4 @@ final class ArticleProvider implements ArticleProviderInterface
         return $article->getArticlePageContent();
     }
 
-    private function checkArticleExists(int $id)
-    {
-        if ($id > 50) {
-            throw new ArticleNotFoundException('Sorry, this article no longer exists or did not exist at all');
-        }
-    }
 }
