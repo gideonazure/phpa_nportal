@@ -11,5 +11,5 @@ use App\ViewModel\ArticlePage;
  */
 interface ArticleProviderInterface
 {
-    public function getById(int $id): ArticlePage;
+    public function getById(int $id): object;
 }

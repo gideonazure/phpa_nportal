@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\ViewModel\ArticlePage;
+use App\ViewModel\HomePageArticle;
+use App\Exception\ArticleBodyCannotBeEmptyException;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,129 +18,122 @@ class Article
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $еш�title;
+    private string $title;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $image;
+    private ?string $image = null;
 
     /**
      * @ORM\Column(type="string", length=500, nullable=true)
      */
-    private $shortDescription;
+    private ?string $shortDescription = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $body;
+    private ?string $body = null;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $publicationDate;
+    private ?\DateTimeImmutable $publicationDate = null;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $updatedAt;
+    private \DateTimeImmutable $updatedAt;
 
-    public function getId(): ?int
+    /**
+     * Article constructor.
+     * @param string $title
+     */
+    public function __construct(string $title)
     {
-        return $this->id;
+
+        $this->title = $title;
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function getеш�title(): ?string
+    public function getHomePageArticle(): HomePageArticle
     {
-        return $this->еш�title;
+        return new HomePageArticle(
+            $this->id,
+            'Set category here', //TODO: need add category names
+            $this->title,
+            $this->publicationDate,
+            $this->image,
+            $this->shortDescription
+        );
     }
 
-    public function setеш�title(string $еш�title): self
+    public function getArticlePageContent(): ArticlePage
     {
-        $this->еш�title = $еш�title;
-
-        return $this;
+        return new ArticlePage(
+            $this->id,
+            'Set category here', //TODO: need add category names
+            $this->title,
+            $this->body,
+            $this->publicationDate
+        );
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): self
+    /**
+     * @param string|null $image
+     * @return Article
+     */
+    public function addImage(?string $image): self
     {
         $this->image = $image;
 
         return $this;
     }
 
-    public function getShortDescription(): ?string
-    {
-        return $this->shortDescription;
-    }
-
-    public function setShortDescription(?string $shortDescription): self
+    /**
+     * @param string|null $shortDescription
+     * @return Article
+     */
+    public function addShortDescription(?string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
 
         return $this;
     }
 
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): self
+    /**
+     * @param string|null $body
+     * @return Article
+     */
+    public function addBody(?string $body): self
     {
         $this->body = $body;
 
         return $this;
     }
 
-    public function getPublicationDate(): ?\DateTimeImmutable
+    /**
+     * @throws ArticleBodyCannotBeEmptyException
+     */
+    public function publish(): void
     {
-        return $this->publicationDate;
+        if($this->body === null){
+            throw new ArticleBodyCannotBeEmptyException();
+        }
+
+        $this->publicationDate = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
-    public function setPublicationDate(?\DateTimeImmutable $publicationDate): self
-    {
-        $this->publicationDate = $publicationDate;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
 }
