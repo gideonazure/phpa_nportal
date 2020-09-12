@@ -176,6 +176,16 @@ class Category
         return $this->articles;
     }
 
+    /**
+     * @return Collection|Article[]
+     */
+    public function getPublishedArticles(): Collection
+    {
+        return $this->articles->filter(function($article) {
+            return !is_null($article->getPublicationDate());
+        });
+    }
+
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {

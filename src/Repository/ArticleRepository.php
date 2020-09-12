@@ -33,7 +33,6 @@ final class ArticleRepository extends ServiceEntityRepository
     public function getLatestPublished(): array
     {
         $query = $this->createQueryBuilder('a')
-           ->leftJoin(Category::class, 'c', Join::WITH, 'c.id = a.category')
            ->where('a.publicationDate IS NOT NULL')
            ->setMaxResults(self::LATEST_PUBLISHED_ARTICLES_COUNT)
            ->orderBy('a.publicationDate', 'DESC')
@@ -60,11 +59,17 @@ final class ArticleRepository extends ServiceEntityRepository
     /**
      * @return Article
      *
+     * @throws ArticleNotFoundException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getOneById(int $id): object
     {
-        $result = $this->findOneBy(['id' => $id]);
+        $query = $this->createQueryBuilder('a')
+            ->where('a.publicationDate IS NOT NULL')
+            ->andWhere('a.id = ' . $id)
+            ->getQuery();
+
+        $result = $query->getOneOrNullResult();
 
         if (null === $result) {
             throw new ArticleNotFoundException('Sorry, this article no longer exists or did not exist at all');
