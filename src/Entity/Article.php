@@ -2,10 +2,15 @@
 
 namespace App\Entity;
 
+use App\Collection\Categories;
+use App\Exception\ArticleCategoryCannotBeEmptyException;
 use App\ViewModel\ArticlePage;
+use App\ViewModel\CategoryPageArticle;
 use App\ViewModel\HomePageArticle;
 use App\Exception\ArticleBodyCannotBeEmptyException;
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,6 +29,18 @@ class Article
      * @ORM\Column(type="string", length=255)
      */
     private string $title;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private int $category;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     * @var Collection
+     */
+    private Collection $categories;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -61,8 +78,8 @@ class Article
      */
     public function __construct(string $title)
     {
-
         $this->title = $title;
+        $this->categories = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
@@ -71,7 +88,7 @@ class Article
     {
         return new HomePageArticle(
             $this->id,
-            'Set category here', //TODO: need add category names
+            $this->category,
             $this->title,
             $this->publicationDate,
             $this->image,
@@ -83,12 +100,23 @@ class Article
     {
         return new ArticlePage(
             $this->id,
-            'Set category here', //TODO: need add category names
+            $this->category,
             $this->title,
             $this->body,
             $this->publicationDate
         );
     }
+
+//    public function getCategoryPageArticle(): CategoryPageArticle
+//    {
+//        return new CategoryPageArticle(
+//            $this->id,
+//            'Set category here', //TODO: need add category names
+//            $this->title,
+//            $this->body,
+//            $this->publicationDate
+//        );
+//    }
 
     /**
      * @param string|null $image
@@ -124,12 +152,38 @@ class Article
     }
 
     /**
+     * @param integer|null $category
+     * @return Article
+     */
+    public function addCategory(?int $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCategor(): Collection
+    {
+        return $this->categories;
+    }
+
+
+
+    /**
      * @throws ArticleBodyCannotBeEmptyException
+     * @throws ArticleCategoryCannotBeEmptyException
      */
     public function publish(): void
     {
         if($this->body === null){
             throw new ArticleBodyCannotBeEmptyException();
+        }
+
+        if($this->category === null){
+            throw new ArticleCategoryCannotBeEmptyException();
         }
 
         $this->publicationDate = new \DateTimeImmutable();

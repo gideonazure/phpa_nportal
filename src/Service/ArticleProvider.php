@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Collection\CategoryPageArticles;
 use App\Entity\Article;
 use App\Exception\ArticleNotFoundException;
 use App\Repository\ArticleRepository;

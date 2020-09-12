@@ -6,7 +6,9 @@ namespace App\Service;
 
 use App\Collection\CategoryPageArticles;
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 
 final class CategoryPageArticlesProvider implements CategoryPageArticlesProviderInterface
 {
@@ -15,18 +17,27 @@ final class CategoryPageArticlesProvider implements CategoryPageArticlesProvider
      * @var ArticleRepository
      */
     private ArticleRepository $articleRepository;
+    private CategoryRepository $categoryRepository;
 
-    public function __construct(ArticleRepository $articleRepository)
+
+    public function __construct(
+        ArticleRepository $articleRepository,
+        CategoryRepository $categoryRepository
+    )
     {
         $this->articleRepository = $articleRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
-    public function getList(): CategoryPageArticles
+    public function getList(int $category): CategoryPageArticles
     {
-        $articles = $this->articleRepository->getLatestPublished();
-        $viewModels = \array_map(fn (Article $article) => $article->getHomePageArticle(), $articles);
+        $category = $this->categoryRepository->getById($category);
+        $articles = $category->getArticles();
 
-        return new CategoryPageArticles(...$viewModels);
+//        dd($articles);
+
+//        $viewModels = \array_map(fn (Article $article) => $article->getHomePageArticle(), $articles);
+//        return new CategoryPageArticles(...$viewModels);
     }
 
 }

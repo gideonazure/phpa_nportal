@@ -8,37 +8,15 @@ use App\ViewModel\CategoryPageArticle;
 
 final class CategoryPageArticles implements \IteratorAggregate
 {
-    private array $articles;
+    private array $categoryPageArticles;
 
-    public function __construct(CategoryPageArticle ...$articles)
+    public function __construct(CategoryPageArticle ...$categoryPageArticles)
     {
-        $this->articles = $articles;
-    }
-
-    public function getLates(int $count): self
-    {
-        $lates = [];
-
-        for ($i = 0; $i < $count; ++$i) {
-            $article = \array_shift($this->articles);
-
-            if (null === $article) {
-                break;
-            }
-
-            $lates[] = $article;
-        }
-
-        return new self(...$lates);
-    }
-
-    public function getOneLates(): ?CategoryPageArticle
-    {
-        return \array_shift($this->articles);
+        $this->categoryPageArticles = $categoryPageArticles;
     }
 
     public function getIterator(): iterable
     {
-        return new \ArrayIterator($this->articles);
+        return new \ArrayIterator($this->categoryPageArticles);
     }
 }

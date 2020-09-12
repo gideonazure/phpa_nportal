@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Exception\ArticleNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +19,7 @@ final class ArticleRepository extends ServiceEntityRepository
 {
 
     private const LATEST_PUBLISHED_ARTICLES_COUNT = 10;
+    private const CATEGORY_PAGE_ARTICLES_COUNT = 15;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -29,10 +32,26 @@ final class ArticleRepository extends ServiceEntityRepository
     public function getLatestPublished(): array
     {
        $query = $this->createQueryBuilder('a')
+           ->leftJoin(Category::class, 'c', Join::WITH, 'c.id = a.category')
            ->where('a.publicationDate IS NOT NULL')
            ->setMaxResults(self::LATEST_PUBLISHED_ARTICLES_COUNT)
            ->orderBy('a.publicationDate', 'DESC')
            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    /**
+     * @return Article[]
+     */
+    public function getByCategory(int $category): array
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.publicationDate IS NOT NULL')
+            ->andWhere('a.category = ' . $category)
+            ->setMaxResults(self::CATEGORY_PAGE_ARTICLES_COUNT)
+            ->orderBy('a.publicationDate', 'DESC')
+            ->getQuery();
 
         return $query->getResult();
     }

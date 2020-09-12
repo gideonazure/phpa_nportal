@@ -7,65 +7,78 @@ namespace App\ViewModel;
 final class CategoryPageArticle
 {
     private int $id;
-    private string $name;
-    private string $notice;
-    private \DateTimeImmutable $createdAt;
-    private \DateTimeImmutable $updatedAt;
-
+    private string $categoryTitle;
+    private string $title;
+    private \DateTimeImmutable $publicationDate;
+    private string $shortDescription;
+    private string $categorySlug;
+    private string $image;
 
     public function __construct(
         int $id,
-        string $name,
-        string $notice,
-        \DateTimeImmutable $createdAt,
-        \DateTimeImmutable $updatedAt
+        string $title,
+        string $image,
+        string $shortDescription,
+        string $categorySlug,
+        string $categoryTitle,
+        \DateTimeImmutable $publicationDate
     ) {
         $this->id = $id;
-        $this->name = $name;
-        $this->notice = $notice;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->title = $title;
+        $this->image = $image;
+        $this->shortDescription = $shortDescription;
+        $this->categoryTitle = $categoryTitle;
+        $this->categorySlug = $categorySlug;
+        $this->publicationDate = $publicationDate;
+
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function getCategoryTitle(): string
     {
-        return $this->name;
+        return $this->categoryTitle;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getText(): string
+    {
+        return $this->text;
+    }
+
+    public function getPublicationDate(): \DateTimeImmutable
+    {
+        return $this->publicationDate;
     }
 
     /**
      * @return string
      */
-    public function getNotice(): string
+    public function getShortDescription(): string
     {
-        return $this->notice;
+        return $this->shortDescription;
     }
 
     /**
-     * @return \DateTimeImmutable
+     * @return string
      */
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getCategorySlug(): string
     {
-        return $this->createdAt;
+        return $this->categorySlug;
     }
 
     /**
-     * @return \DateTimeImmutable
+     * @return string
      */
-    public function getUpdatedAt(): \DateTimeImmutable
+    public function getImage(): string
     {
-        return $this->updatedAt;
+        return $this->image;
     }
-
-
 }

@@ -8,5 +8,5 @@ use App\Collection\CategoryPageArticles;
 
 interface CategoryPageArticlesProviderInterface
 {
-    public function getList(): CategoryPageArticles;
+    public function getList(int $category): CategoryPageArticles;
 }

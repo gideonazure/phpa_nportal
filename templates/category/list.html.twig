@@ -1,0 +1,9 @@
+{% if categories is not null %}
+    <ul class="navbar-nav mr-auto">
+        {% for category in categories %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_category', { 'slug': category.slug }) }}">{{ category.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

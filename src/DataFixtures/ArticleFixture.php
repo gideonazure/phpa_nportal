@@ -22,8 +22,6 @@ final class ArticleFixture extends AbstractFixture
             $manager->persist($article);
         }
 
-
-
         $manager->flush();
     }
 
@@ -33,6 +31,7 @@ final class ArticleFixture extends AbstractFixture
 
         return $article
             ->addImage($this->faker->imageUrl())
+            ->addCategory($this->faker->numberBetween(46, 50))
             ->addShortDescription($this->generateShortDescription())
             ->addBody($this->generateBody());
     }
