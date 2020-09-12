@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
-use App\Collection\Categories;
-use App\Exception\ArticleCategoryCannotBeEmptyException;
-use App\ViewModel\ArticlePage;
-use App\ViewModel\CategoryPageArticle;
-use App\ViewModel\HomePageArticle;
 use App\Exception\ArticleBodyCannotBeEmptyException;
+use App\Exception\ArticleCategoryCannotBeEmptyException;
 use App\Repository\ArticleRepository;
+use App\ViewModel\ArticlePage;
+use App\ViewModel\HomePageArticle;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,16 +30,9 @@ class Article
     private string $title;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private int $category;
-
-    /**
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
-     * @var Collection
      */
-    private Collection $categories;
+    private $category;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -74,12 +66,11 @@ class Article
 
     /**
      * Article constructor.
-     * @param string $title
      */
     public function __construct(string $title)
     {
         $this->title = $title;
-        $this->categories = new ArrayCollection();
+        $this->category = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
@@ -107,19 +98,7 @@ class Article
         );
     }
 
-//    public function getCategoryPageArticle(): CategoryPageArticle
-//    {
-//        return new CategoryPageArticle(
-//            $this->id,
-//            'Set category here', //TODO: need add category names
-//            $this->title,
-//            $this->body,
-//            $this->publicationDate
-//        );
-//    }
-
     /**
-     * @param string|null $image
      * @return Article
      */
     public function addImage(?string $image): self
@@ -130,7 +109,6 @@ class Article
     }
 
     /**
-     * @param string|null $shortDescription
      * @return Article
      */
     public function addShortDescription(?string $shortDescription): self
@@ -141,7 +119,6 @@ class Article
     }
 
     /**
-     * @param string|null $body
      * @return Article
      */
     public function addBody(?string $body): self
@@ -151,26 +128,10 @@ class Article
         return $this;
     }
 
-    /**
-     * @param integer|null $category
-     * @return Article
-     */
-    public function addCategory(?int $category): self
+    public function getCategory(): Category
     {
-        $this->category = $category;
-
-        return $this;
+        return $this->category;
     }
-
-    /**
-     * @return Collection
-     */
-    public function getCategor(): Collection
-    {
-        return $this->categories;
-    }
-
-
 
     /**
      * @throws ArticleBodyCannotBeEmptyException
@@ -178,11 +139,11 @@ class Article
      */
     public function publish(): void
     {
-        if($this->body === null){
+        if (null === $this->body) {
             throw new ArticleBodyCannotBeEmptyException();
         }
 
-        if($this->category === null){
+        if (null === $this->category) {
             throw new ArticleCategoryCannotBeEmptyException();
         }
 
@@ -190,4 +151,99 @@ class Article
         $this->updatedAt = new \DateTimeImmutable();
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(?string $shortDescription): self
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function getBody(): ?string
+    {
+        return $this->body;
+    }
+
+    public function setBody(?string $body): self
+    {
+        $this->body = $body;
+
+        return $this;
+    }
+
+    public function getPublicationDate(): ?\DateTimeImmutable
+    {
+        return $this->publicationDate;
+    }
+
+    public function setPublicationDate(?\DateTimeImmutable $publicationDate): self
+    {
+        $this->publicationDate = $publicationDate;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
 }

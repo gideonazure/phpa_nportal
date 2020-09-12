@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
-use App\Entity\Article;
 use App\Entity\Category;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 final class CategoryFixture extends AbstractFixture
@@ -14,12 +14,11 @@ final class CategoryFixture extends AbstractFixture
         'IT',
         'Science',
         'Music',
-        'Art'
+        'Art',
     ];
 
     public function load(ObjectManager $manager)
     {
-
         for ($i = 0; $i < count(self::CATEGORIES); ++$i) {
             $category = $this->createCategory(self::CATEGORIES[$i]);
             $category->check();
@@ -33,5 +32,4 @@ final class CategoryFixture extends AbstractFixture
     {
         return new Category($name);
     }
-
 }

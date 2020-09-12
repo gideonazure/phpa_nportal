@@ -10,7 +10,10 @@ use App\ViewModel\Category;
 interface CategoryProviderInterface
 {
     public function getList(): Categories;
+
     public function getBySlug(string $slug): Category;
+
     public function getById(int $id): Category;
+
     public function getCount(): int;
 }

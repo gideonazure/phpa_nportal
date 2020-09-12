@@ -11,10 +11,6 @@ use App\ViewModel\Category as CategoryView;
 
 final class CategoryProvider implements CategoryProviderInterface
 {
-
-    /**
-     * @var CategoryRepository
-     */
     private CategoryRepository $categoryRepository;
 
     public function __construct(CategoryRepository $categoryRepository)
@@ -33,15 +29,16 @@ final class CategoryProvider implements CategoryProviderInterface
     public function getBySlug(string $slug): CategoryView
     {
         $category = $this->categoryRepository->getBySlug($slug);
+
         return $category->getCategory();
     }
 
     public function getById(int $id): CategoryView
     {
         $category = $this->categoryRepository->getById($id);
+
         return $category->getCategory();
     }
-
 
     public function getCount(): int
     {

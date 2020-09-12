@@ -10,10 +10,6 @@ use App\Repository\ArticleRepository;
 
 final class HomePageArticlesProvider implements HomePageArticlesProviderInterface
 {
-
-    /**
-     * @var ArticleRepository
-     */
     private ArticleRepository $articleRepository;
 
     public function __construct(ArticleRepository $articleRepository)
@@ -28,5 +24,4 @@ final class HomePageArticlesProvider implements HomePageArticlesProviderInterfac
 
         return new HomePageArticles(...$viewModels);
     }
-
 }

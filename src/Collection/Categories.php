@@ -15,10 +15,8 @@ final class Categories implements \IteratorAggregate
         $this->categories = $categories;
     }
 
-
     public function getIterator(): iterable
     {
         return new \ArrayIterator($this->categories);
     }
-
 }

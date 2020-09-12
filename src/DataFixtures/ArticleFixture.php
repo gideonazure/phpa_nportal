@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Article;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 final class ArticleFixture extends AbstractFixture
@@ -15,7 +16,7 @@ final class ArticleFixture extends AbstractFixture
         for ($i = 0; $i < self::ARTICLES_COUNT; ++$i) {
             $article = $this->createArticle();
 
-            if($this->faker->boolean(80)){
+            if ($this->faker->boolean(80)) {
                 $article->publish();
             }
 
@@ -31,7 +32,6 @@ final class ArticleFixture extends AbstractFixture
 
         return $article
             ->addImage($this->faker->imageUrl())
-            ->addCategory($this->faker->numberBetween(46, 50))
             ->addShortDescription($this->generateShortDescription())
             ->addBody($this->generateBody());
     }

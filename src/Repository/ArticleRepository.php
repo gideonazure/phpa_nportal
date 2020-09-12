@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Article;
@@ -17,7 +19,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 final class ArticleRepository extends ServiceEntityRepository
 {
-
     private const LATEST_PUBLISHED_ARTICLES_COUNT = 10;
     private const CATEGORY_PAGE_ARTICLES_COUNT = 15;
 
@@ -31,7 +32,7 @@ final class ArticleRepository extends ServiceEntityRepository
      */
     public function getLatestPublished(): array
     {
-       $query = $this->createQueryBuilder('a')
+        $query = $this->createQueryBuilder('a')
            ->leftJoin(Category::class, 'c', Join::WITH, 'c.id = a.category')
            ->where('a.publicationDate IS NOT NULL')
            ->setMaxResults(self::LATEST_PUBLISHED_ARTICLES_COUNT)
@@ -48,7 +49,7 @@ final class ArticleRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('a')
             ->where('a.publicationDate IS NOT NULL')
-            ->andWhere('a.category = ' . $category)
+            ->andWhere('a.category = '.$category)
             ->setMaxResults(self::CATEGORY_PAGE_ARTICLES_COUNT)
             ->orderBy('a.publicationDate', 'DESC')
             ->getQuery();
@@ -56,21 +57,19 @@ final class ArticleRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-
     /**
      * @return Article
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getOneById(int $id): object
     {
-        $result = $this->findOneBy(array('id' => $id));
+        $result = $this->findOneBy(['id' => $id]);
 
-        if ($result === null) {
+        if (null === $result) {
             throw new ArticleNotFoundException('Sorry, this article no longer exists or did not exist at all');
         }
 
         return $result;
     }
-
-
 }

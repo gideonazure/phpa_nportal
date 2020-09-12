@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\ViewModel;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 final class Category
@@ -17,13 +16,12 @@ final class Category
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-
     public function __construct(
         int $id,
         string $name,
         string $slug,
         ?string $notice,
-        Collection  $articles,
+        Collection $articles,
         \DateTimeImmutable $createdAt,
         \DateTimeImmutable $updatedAt
     ) {
@@ -36,61 +34,38 @@ final class Category
         $this->updatedAt = $updatedAt;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getNotice(): string
     {
         return $this->notice;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
     public function getUpdatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @return string
-     */
     public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * @return Collection
-     */
     public function getArticles(): Collection
     {
         return $this->articles;
     }
-
-
 }

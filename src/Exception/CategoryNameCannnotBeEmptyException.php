@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Exception;
 
-class ArticleCategoryCannotBeEmptyException extends \Exception
+class CategoryNameCannnotBeEmptyException extends \Exception
 {
 }

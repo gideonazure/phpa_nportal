@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Exception\CategoryNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,12 +33,18 @@ class CategoryRepository extends ServiceEntityRepository
 
     public function getById(int $id): object
     {
-        return $this->findOneBy(array('id' => $id));
+        return $this->findOneBy(['id' => $id]);
     }
 
     public function getBySlug(string $slug): object
     {
-        return $this->findOneBy(array('slug' => $slug));
+        $result = $this->findOneBy(['slug' => $slug]);
+
+        if (null === $result) {
+            throw new CategoryNotFoundException('Sorry, this category not found');
+        }
+
+        return $result;
     }
 
     public function getCount(): int

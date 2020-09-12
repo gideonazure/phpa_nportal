@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
-use App\Collection\CategoryPageArticles;
-use App\Exception\CategoryNameCannnotBeEmpty;
-use App\Exception\CategorySlugCannnotBeEmpty;
+use App\Exception\CategoryNameCannnotBeEmptyException;
 use App\Repository\CategoryRepository;
 use App\ViewModel\Category as CategoryView;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -42,6 +42,7 @@ class Category
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
+     *
      * @var Collection
      */
     private $articles;
@@ -58,6 +59,7 @@ class Category
 
     /**
      * Category constructor.
+     *
      * @param $name
      */
     public function __construct($name)
@@ -67,7 +69,6 @@ class Category
         $this->createAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
-
 
     /**
      * @param mixed $name
@@ -93,7 +94,6 @@ class Category
         $this->notice = $notice;
     }
 
-
     /**
      * @return mixed
      */
@@ -118,20 +118,92 @@ class Category
         return $this->slug;
     }
 
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getNotice(): ?string
+    {
+        return $this->notice;
+    }
+
+    public function setNotice(?string $notice): self
+    {
+        $this->notice = $notice;
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(\DateTimeImmutable $createAt): self
+    {
+        $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
     /**
-     * @return Collection
+     * @return Collection|Article[]
      */
     public function getArticles(): Collection
     {
         return $this->articles;
     }
 
-    public function check(): void
+    public function addArticle(Article $article): self
     {
-        if($this->name === null){
-            throw new CategoryNameCannnotBeEmpty('Category name cannot be empty. Please check category name');
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setCategory($this);
         }
 
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
+            // set the owning side to null (unless already changed)
+            if ($article->getCategory() === $this) {
+                $article->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function check(): void
+    {
+        if (null === $this->name) {
+            throw new CategoryNameCannnotBeEmptyException('Category name cannot be empty. Please check category name');
+        }
     }
 
     public function getCategory(): CategoryView
@@ -147,4 +219,8 @@ class Category
         );
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

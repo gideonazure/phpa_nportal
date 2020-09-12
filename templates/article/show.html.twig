@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% set pageTitle = article.title %}
-{% set activeCategory = article.categoryTitle %}
+{% set activeCategory = article.category %}
 
 {% block styles %}
     <link rel="stylesheet" href="{{ asset('css/article.css') }}">
@@ -12,7 +12,7 @@
         <div class="article_title">{{ article.title }}</div>
 
         <div class="article_sub">
-            <span class="article_category">{{ article.categoryTitle }}</span>
+            <a class="article_category" href="{{ path('app_category', { 'slug': article.category.slug }) }}">{{ article.category }}</a>
             <span class="article_date">{{ article.publicationDate | date('d.m.Y') }}</span>
         </div>
         <div class="article_text">{{ article.text }}</div>

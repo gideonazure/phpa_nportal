@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Service\CategoryProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 final class BaseController extends AbstractController
 {
@@ -18,13 +17,12 @@ final class BaseController extends AbstractController
         $this->categoriesProvider = $categoriesProvider;
     }
 
-
     public function categoriesList(): Response
     {
         $categories = $this->categoriesProvider->getList();
 
-        return $this->render('category/list.html.twig', [
-            'categories' => $categories
+        return $this->render('_navigation.twig', [
+            'categories' => $categories,
         ]);
     }
 }

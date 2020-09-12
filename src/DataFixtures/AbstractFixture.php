@@ -1,18 +1,16 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-
 use App\Service\CategoryProviderInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
 abstract class AbstractFixture extends Fixture
 {
-
     protected Generator $faker;
     protected CategoryProviderInterface $categoryProvider;
 
