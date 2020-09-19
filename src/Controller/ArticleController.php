@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Exception\ArticleNotFoundException;
 use App\Service\ArticleProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +27,7 @@ final class ArticleController extends AbstractController
     {
         try {
             $article = $this->articleProvider->getById($id);
-        } catch (\ArticleNotFoundException $e) {
+        } catch (ArticleNotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage());
         }
 

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% set pageTitle = category %}
+{% set activeCategory = category %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="posts">
+        <div class="posts_category">{{ category }}</div>
+        {% if articles is not null %}
+            {% for article in articles %}
+                <article class="post">
+                    <div class="post_img">
+                        <img src="{{ article.image }}" alt="">
+                    </div>
+                    <div class="post_info">
+                        <a href="{{ path('app_article', { 'id': article.id }) }}"><h4>{{ article.title }}</h4></a>
+                        <p>{{ article.shortDescription }}</p>
+                        <time>{{ article.publicationDate | date('d-m-Y') }}</time>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p class="post_not_found">Sorry, there are no articles in this category yet</p>
+        {% endif %}
+    </section>
+{% endblock %}

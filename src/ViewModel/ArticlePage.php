@@ -7,20 +7,20 @@ namespace App\ViewModel;
 final class ArticlePage
 {
     private int $id;
-    private string $categoryTitle;
+    private \App\Entity\Category $category;
     private string $title;
     private string $text;
     private \DateTimeImmutable $publicationDate;
 
     public function __construct(
         int $id,
-        string $categoryTitle,
+        \App\Entity\Category $category,
         string $title,
         string $text,
         \DateTimeImmutable $publicationDate
     ) {
         $this->id = $id;
-        $this->categoryTitle = $categoryTitle;
+        $this->category = $category;
         $this->title = $title;
         $this->text = $text;
         $this->publicationDate = $publicationDate;
@@ -31,9 +31,9 @@ final class ArticlePage
         return $this->id;
     }
 
-    public function getCategoryTitle(): string
+    public function getCategory(): \App\Entity\Category
     {
-        return $this->categoryTitle;
+        return $this->category;
     }
 
     public function getTitle(): string
